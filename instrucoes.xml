@@ -1,0 +1,93 @@
+<prompt>
+<persona>
+Você é um engenheiro de software sênior, especialista em desenvolvimento de aplicações web com Python, Streamlit e integração com bancos de dados PostgreSQL. Sua principal habilidade é criar sistemas robustos, seguros e com código limpo e bem documentado, seguindo as melhores práticas de segurança e fornecendo guias de implementação claros.
+</persona>
+
+<contexto_geral>
+O objetivo é criar o código completo e as instruções de implantação para um "Sistema de Controle de Estoque". A aplicação deve ser desenvolvida utilizando a biblioteca Streamlit em um único arquivo chamado `app.py`. O banco de dados a ser utilizado é o PostgreSQL.
+</contexto_geral>
+
+<estrutura_banco_dados>
+As credenciais que deve estar em .env e voce deve utilizar para escrever o código:
+DB_HOST=147.93.12.64
+DB_PORT=5433
+DB_NAME=estoque-db
+DB_USER=postgres
+DB_PASSWORD=5d05366e653c2379b17c
+
+O schema do banco de dados em PostgreSQL deve conter as seguintes tabelas e campos:
+
+1. Tabela `usuarios`:
+    - `id` (SERIAL, PRIMARY KEY)
+    - `nome` (VARCHAR(100), NOT NULL, UNIQUE)
+    - `senha` (VARCHAR(255), NOT NULL) -- A senha deve ser armazenada como um hash seguro (ex: bcrypt).
+    - `grupo` (VARCHAR(50), NOT NULL) -- 'Administrador' ou 'Empresa'
+
+2. Tabela `equipamentos`:
+    - `id` (SERIAL, PRIMARY KEY)
+    - `nome` (VARCHAR(150), NOT NULL)
+    - `marca` (VARCHAR(100))
+    - `modelo` (VARCHAR(100))
+    - `quantidade_minima` (INTEGER, NOT NULL, DEFAULT 0)
+    - `quantidade_atual` (INTEGER, NOT NULL, DEFAULT 0) -- Atualizado apenas pela lógica da aplicação.
+
+3. Tabela `entradas`:
+    - `id` (SERIAL, PRIMARY KEY)
+    - `equipamento_id` (INTEGER, FOREIGN KEY REFERENCES equipamentos(id))
+    - `quantidade` (INTEGER, NOT NULL)
+    - `responsavel` (VARCHAR(100), NOT NULL)
+    - `data` (TIMESTAMP, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
+    - `localizacao` (VARCHAR(100), NOT NULL)
+
+4. Tabela `saidas`:
+    - `id` (SERIAL, PRIMARY KEY)
+    - `equipamento_id` (INTEGER, FOREIGN KEY REFERENCES equipamentos(id))
+    - `quantidade` (INTEGER, NOT NULL)
+    - `recebedor` (VARCHAR(100), NOT NULL)
+    - `data` (TIMESTAMP, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
+</estrutura_banco_dados>
+
+<requisitos_funcionais>
+A aplicação Streamlit deve implementar as seguintes funcionalidades:
+
+1.  **Autenticação:** Tela de login (usuário `nome` e `senha`). Use `st.session_state` para gerenciar o login.
+2.  **Controle de Acesso por Grupo:**
+    - **'Administrador':** acesso ao dashboard do estoque de TI e do estoque da empresa.
+    - **'Empresa':** Acesso ao dashboard apenas da empresa .
+3.  **Páginas da Aplicação:** Dashboard de Estoque (Apresentando o painel referente ), Cadastro de Equipamentos (contendo todos os itens de cadastro do equipamento), Registrar Entrada (contendo todos os campos de registro de entrada), Registrar Saída (contendo todos os campos de registro de saida).
+4.  **Lógica de Negócio:** Atualização automática da `quantidade_atual` ao registrar entradas/saídas.
+5.  **Faça o necessario para melhorar a funcionalidade do sistema:** Caso tenha alguma ideia por favor informe para imprementar
+</requisitos_funcionais>
+
+<instrucoes_geracao>
+Pense passo a passo para garantir que todas as partes do sistema sejam criadas de forma lógica e integrada. Siga estritamente a seguinte ordem de geração:
+
+**Passo 1: Script do Banco de Dados**
+Gere um único script SQL (`schema.sql`). Este script deve:
+- Criar todas as tabelas (`usuarios`, `equipamentos`, `entradas`, `saidas`) com suas restrições.
+- **Inserir um usuário padrão:** Adicione um `INSERT` na tabela `usuarios` para criar um usuário administrador. Ex: `nome: 'admin'`, `senha: 'admin123'` (o hash da senha deve ser gerado), `grupo: 'Administrador'`.
+
+**Passo 2: Arquivo de Dependências**
+Gere o conteúdo para um arquivo `requirements.txt` listando todas as bibliotecas Python necessárias (streamlit, psycopg2-binary, python-dotenv, bcrypt, etc.).
+
+**Passo 3: Código da Aplicação Streamlit**
+Gere o código completo para o arquivo `app.py`. O código deve:
+- Carregar as credenciais do banco de dados a partir de um arquivo `.env`.
+- Implementar todas as funcionalidades, páginas e regras de negócio descritas nos requisitos.
+- Conter comentários claros.
+
+**Passo 4: Guia de Execução e Acesso**
+Gere o conteúdo para um arquivo `README.md`. Este guia deve explicar de forma clara e sequencial:
+1.  **Pré-requisitos:** O que precisa ser instalado (Python, PostgreSQL).
+2.  **Configuração do Banco de Dados:** Como criar o banco de dados no PostgreSQL e executar o script `schema.sql`.
+3.  **Configuração do Projeto:** Como criar um ambiente virtual, instalar as dependências do `requirements.txt` e preencher o arquivo `.env` com as credenciais.
+4.  **Como Executar:** O comando exato para iniciar a aplicação (`streamlit run app.py`).
+5.  **Dados de Acesso:** Informar o usuário e a senha do administrador padrão criado no Passo 1.
+6.  **No final, revise o código:**
+</instrucoes_geracao>
+
+<formato_saida>
+**Voce deve garantir que o sistema rodará sem problemas, sendo assim voce tem a permissao para rodar os comandos que quiser**
+
+</formato_saida>
+</prompt>

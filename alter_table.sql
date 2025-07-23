@@ -1,0 +1,1 @@
+ALTER TABLE equipamentos ADD COLUMN IF NOT EXISTS localizacao VARCHAR(255);
