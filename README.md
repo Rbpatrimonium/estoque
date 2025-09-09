@@ -55,11 +55,11 @@ Este guia descreve como configurar e executar a aplicação de controle de estoq
     Crie um arquivo chamado `.env` na raiz do projeto e adicione as credenciais de acesso ao seu banco de dados PostgreSQL. Substitua os valores conforme necessário.
 
     ```
-    DB_HOST=147.93.12.64
+    DB_HOST=
     DB_PORT=5433
-    DB_NAME=estoque-db
-    DB_USER=postgres
-    DB_PASSWORD=5d05366e653c2379b17c
+    DB_NAME=-db
+    DB_USER=
+    DB_PASSWORD=
     ```
 
 ## 4. Como Executar a Aplicação
@@ -71,9 +71,3 @@ streamlit run app.py
 ```
 
 A aplicação estará acessível no seu navegador no endereço fornecido pelo Streamlit (geralmente `http://localhost:8501`).
-
-## 5. Dados de Acesso Padrão
-
-- **Usuário**: `admin`
-- **Senha**: `admin123`
-- **Grupo**: `TI`
